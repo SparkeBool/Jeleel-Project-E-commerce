@@ -31,7 +31,7 @@ app.use(helmet());
 
 
 // Serve static files from the 'client' directory
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/api', authRoutes);
