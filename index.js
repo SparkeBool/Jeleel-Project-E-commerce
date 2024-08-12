@@ -1,14 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const connectDB = require('../config/db');
-const authRoutes = require('../routes/authRoutes');
-const productRoutes = require('../routes/productRoutes');
+const connectDB = require('config/db');
+const authRoutes = require('routes/authRoutes');
+const productRoutes = require('routes/productRoutes');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const orderRoutes = require('../routes/orderRoutes');
+const orderRoutes = require('routes/orderRoutes');
 const path = require("path");
-const { protect } = require('../Middleware/authMiddleware');
+const { protect } = require('Middleware/authMiddleware');
 
 require('dotenv').config();
 require('express-async-errors');
