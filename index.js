@@ -19,11 +19,13 @@ if(!process.env.JWT_SECRET){
     console.log("Invalid JWT Secret provided");
 }
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; connect-src 'self' http://localhost:3000"
+  );
+  next();
+});
 
 app.use(cookieParser());
 app.use(bodyParser.json());
