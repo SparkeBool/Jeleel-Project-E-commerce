@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://jeleel-project-e-commerce.vercel.app';
 // 'e-commerce-cbwl32osw-olamilekanjes-projects.vercel.app';
 
 // Register User
