@@ -22,7 +22,7 @@ if(!process.env.JWT_SECRET){
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
-    "default-src 'self'; connect-src 'self' http://localhost:3000"
+    "default-src 'self'; connect-src 'self' https://jeleel-project-e-commerce.vercel.app"
   );
   next();
 });
