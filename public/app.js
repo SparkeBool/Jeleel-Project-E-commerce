@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:3000';
 // 'e-commerce-cbwl32osw-olamilekanjes-projects.vercel.app';
 
 // Register User
@@ -8,7 +7,7 @@ async function register() {
   const password = document.getElementById('password').value;
 
   try {
-    const response = await axios.post(`${API_URL}/api/register`, {
+    const response = await axios.post(`/api/register`, {
       name,
       email,
       password
@@ -30,7 +29,7 @@ async function login() {
 
   try {
     console.log(email, password);
-    const response = await axios.post(`${API_URL}/api/login`, {
+    const response = await axios.post(`/api/login`, {
       email,
       password
     });
@@ -70,7 +69,7 @@ async function createProduct() {
 // Fetch Products
 async function fetchProducts() {
   try {
-    const response = await axios.get(`${API_URL}/api/products/allProducts`);
+    const response = await axios.get(`/api/products/allProducts`);
     const products = response.data;
     console.log(products);
     const productList = document.getElementById('products');
