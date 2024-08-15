@@ -1,4 +1,4 @@
-// 'e-commerce-cbwl32osw-olamilekanjes-projects.vercel.app';
+const API_URL = 'https://jeleel-project-e-commerce.vercel.app';
 
 // Register User
 async function register() {
@@ -7,18 +7,14 @@ async function register() {
   const password = document.getElementById('password').value;
 
   try {
-    const response = await axios.post(`/api/register`, {
+    const response = await axios.post(`${API_URL}/api/register`, {
       name,
       email,
       password
     });
     alert(response.data.message);
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.message) {
-      alert(error.response.data.message);  // Specific error message from the server
-    } else {
-      alert(error.message);  // General error message
-    }
+    alert(error.response.error);
   }
 }
 
@@ -28,20 +24,19 @@ async function login() {
   const password = document.getElementById('login-password').value;
 
   try {
-    console.log(email, password);
-    const response = await axios.post(`/api/login`, {
+    const response = await axios.post(`${API_URL}/api/login`, {
       email,
       password
     });
     alert('Login successful');
-
+    localStorage.setItem('accessToken', response.data.token);
     fetchProducts();
   } catch (error) {
     alert(error.response.data.error);
   }
 }
 
-// Create Product
+//create products
 async function createProduct() {
   const name = document.getElementById('product-name').value;
   const description = document.getElementById('description').value;
@@ -69,9 +64,12 @@ async function createProduct() {
 // Fetch Products
 async function fetchProducts() {
   try {
-    const response = await axios.get(`/api/products/allProducts`);
+    const response = await axios.get(`${API_URL}/api/allProducts`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      }
+    });
     const products = response.data;
-    console.log(products);
     const productList = document.getElementById('products');
     productList.innerHTML = '';
     products.forEach(product => {
@@ -81,19 +79,16 @@ async function fetchProducts() {
       productList.appendChild(productItem);
     });
   } catch (error) {
-    if (error.response && error.response.data && error.response.data.message) {
-      alert(error.response.data.message);  // Specific error message from the server
+    alert('Failed to fetch products');
+    if (error.response) {
+      // Server responded with a status other than 2xx
+      console.error('Error Response:', error.response);
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error('No Response:', error.request);
     } else {
-      alert('Failed to fetch products');  // General error message
+      // Other errors
+      console.error('Error', error.message);
     }
   }
-  
 }
-
-// Event Listeners
-document.getElementById('registerBtn').addEventListener('click', register);
-document.getElementById('loginBtn').addEventListener('click', login);
-document.getElementById('createProductBtn').addEventListener('click', createProduct);
-
-// Fetch products on page load
-fetchProducts();
